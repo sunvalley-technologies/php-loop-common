@@ -1,0 +1,10 @@
+/coverage
+/vendor/
+/.idea
+/composer.phar
+.phpunit
+/phpunit.xml
+/composer.lock
+/var
+/tests/test*.log
+/tests/logs
