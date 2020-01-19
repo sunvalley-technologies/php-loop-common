@@ -1,6 +1,6 @@
 <?php
 
-namespace SunValley\LoopUtil\Common\Server\Message\Exception;
+namespace SunValley\LoopUtil\Common\Message\Exception;
 
 use Exception;
 

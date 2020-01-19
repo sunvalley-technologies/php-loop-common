@@ -1,10 +1,10 @@
 <?php
 
 
-namespace SunValley\LoopUtil\Common\Server\Message;
+namespace SunValley\LoopUtil\Common\Message;
 
 use Exception;
-use SunValley\LoopUtil\Common\Server\Message\Exception\MalformedMessageException;
+use SunValley\LoopUtil\Common\Message\Exception\MalformedMessageException;
 
 /**
  * Class MessageProcessor is a stream simple message processor. Can parse RFC (2)822 style messages with Content-Length header.

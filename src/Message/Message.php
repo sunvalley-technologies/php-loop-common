@@ -1,6 +1,6 @@
 <?php
 
-namespace SunValley\LoopUtil\Common\Server\Message;
+namespace SunValley\LoopUtil\Common\Message;
 
 /**
  * Class Message represents a RFC(2)822 message

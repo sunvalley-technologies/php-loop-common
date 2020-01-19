@@ -3,9 +3,9 @@
 namespace SunValley\LoopUtil\Common\Tests\Server\Message;
 
 use PHPUnit\Framework\TestCase;
-use SunValley\LoopUtil\Common\Server\Message\Exception\MalformedMessageException;
-use SunValley\LoopUtil\Common\Server\Message\Message;
-use SunValley\LoopUtil\Common\Server\Message\MessageProcessor;
+use SunValley\LoopUtil\Common\Message\Exception\MalformedMessageException;
+use SunValley\LoopUtil\Common\Message\Message;
+use SunValley\LoopUtil\Common\Message\MessageProcessor;
 
 class MessageProcessorTest extends TestCase
 {

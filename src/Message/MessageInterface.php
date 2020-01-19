@@ -1,6 +1,6 @@
 <?php
 
-namespace SunValley\LoopUtil\Common\Server\Message;
+namespace SunValley\LoopUtil\Common\Message;
 
 
 /**
