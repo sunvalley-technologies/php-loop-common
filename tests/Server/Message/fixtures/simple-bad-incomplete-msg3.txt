@@ -1,0 +1,39 @@
+Content-Type: command/reply
+Reply-Text: +OK Events Enabled';
+
+HTTP/1.1 404 Not Found
+Date: Sun, 18 Oct 2012 10:36:20 GMT
+Server: Apache/2.2.14 (Win32)
+Content-Length: 218
+Content-Type: text/html; charset=iso-8859-1
+Connection: Closed
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+
+<head>
+   <title>404 Not Found</title>
+</head>
+
+<body>
+   <h1>Not Found</h1>
+   <p>The requested URL /t.html was not found on this server.</p>
+</body>
+
+</html>
+
+Received: from x.y.test
+	by example.net
+	via TCP
+	with ESMTP
+	id ABC12345
+	for <mary@example.net>;  21 Nov 1997 10:05:43 -0600
+From: John Doe <jdoe@node.example>
+To: Mary Smith <mary@example.net>
+Subject: Saying Hello
+Date: Fri, 21 Nov 1997 09:55:06 -0600
+Content-Length: 50
+Message-ID: <1234@local.node.example>
+
+Content-length not longer.
+So, "Hello". Content-length not longer.

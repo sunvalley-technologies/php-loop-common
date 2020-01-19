@@ -103,7 +103,7 @@ abstract class AbstractReadableStreamHandlingStream extends EventEmitter impleme
     {
         if (!$this->closed) {
             $this->emit('end');
-            $this->close();
+            $this->handleClose();
         }
     }
 

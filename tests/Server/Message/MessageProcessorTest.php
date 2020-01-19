@@ -3,12 +3,20 @@
 namespace SunValley\LoopUtil\Common\Tests\Server\Message;
 
 use PHPUnit\Framework\TestCase;
+use React\EventLoop\Factory;
+use React\Stream\ReadableResourceStream;
+use SunValley\LoopUtil\Common\Message\Exception\IncompleteMessageException;
 use SunValley\LoopUtil\Common\Message\Exception\MalformedMessageException;
+use SunValley\LoopUtil\Common\Message\Exception\MessageException;
+use SunValley\LoopUtil\Common\Message\Io\ReadableMessageStream;
 use SunValley\LoopUtil\Common\Message\Message;
 use SunValley\LoopUtil\Common\Message\MessageProcessor;
+use SunValley\Tests\CallableUtil\CallableTestTrait;
 
 class MessageProcessorTest extends TestCase
 {
+
+    use CallableTestTrait;
 
     public function testSimpleMessagesAutoCRLF()
     {
@@ -32,31 +40,40 @@ class MessageProcessorTest extends TestCase
     {
         $messages = $this->makeTestSimpleMessagesFile(__DIR__ . '/fixtures/simple-msg-good-lflf.txt', "\n", 5);
         $this->makeTestSimpleMessages($messages);
-    }    
-    
+    }
+
     public function testSimpleMessagesLFWellFormed()
     {
-        $messages = $this->makeTestSimpleMessagesFile(__DIR__ . '/fixtures/simple-msg-good-lflf-well-formed.txt', "\n", 5);
+        $messages = $this->makeTestSimpleMessagesFile(
+            __DIR__ . '/fixtures/simple-msg-good-lflf-well-formed.txt',
+            "\n",
+            5
+        );
         $this->makeTestSimpleMessages($messages);
     }
 
-    /** @dataProvider badMessagesProvider */
-    public function testBadMessages($file)
+    public function testSimpleMessagesLFStream()
     {
-        $this->expectException(MalformedMessageException::class);
-        $parser = new MessageProcessor();
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $parser->feed(file_get_contents(__DIR__ . '/fixtures/' . $file));
+        $loop = Factory::create();
+        $fh = fopen(__DIR__ . '/fixtures/simple-msg-good-lflf.txt', 'rn');
+        stream_set_blocking($fh, 0);
+        $fileStream = new ReadableResourceStream($fh, $loop);
+        $messageStream = new ReadableMessageStream($fileStream, new MessageProcessor());
+        $messages = [];
+        $messageStream->on('error', $this->expectCallableNever());
+        $messageStream->on('close', $this->expectCallableOnce());
+        $messageStream->on('end', $this->expectCallableOnce());
+        $messageStream->on(
+            'data',
+            function (Message $message) use (&$messages) {
+                $messages[] = $message;
+            }
+        );
+        $loop->run();
+
+        $this->makeTestSimpleMessages($messages);
     }
 
-    public function badMessagesProvider()
-    {
-        return [
-          //  ['simple-bad-msg1.txt'],
-            //['simple-bad-msg2.txt'],
-            ['simple-bad-msg3.txt'],
-        ];
-    }
 
     protected function makeTestSimpleMessages(array $messages)
     {
@@ -111,30 +128,86 @@ class MessageProcessorTest extends TestCase
     {
         $sample = file_get_contents($sampleFile);
         $parser = new MessageProcessor($eol);
-        try {
-            $messageCount = $parser->feedAndCount($sample);
-        } catch (MalformedMessageException $e) {
-            $this->assertFalse(true, $e);
-
-            return [];
-        }
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $messageCount = $parser->feedAndCount($sample);
         $this->assertEquals($expectedCount, $messageCount);
         $this->assertCount($expectedCount, $parser->unshiftMessages());
         $this->assertCount(0, $parser->unshiftMessages());
 
-        try {
-            $messages = $parser->feed($sample);
-            $this->assertCount($expectedCount, $messages);
-            $this->assertCount(0, $parser->unshiftMessages());
-        } catch (MalformedMessageException $e) {
-            $this->assertFalse(true, $e);
-
-            return [];
-        }
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $messages = $parser->feed($sample);
+        $this->assertCount($expectedCount, $messages);
+        $this->assertCount(0, $parser->unshiftMessages());
 
         return $messages;
     }
 
+    /** @dataProvider badMessagesProvider */
+    public function testBadMessages($file)
+    {
+        $this->expectException(MalformedMessageException::class);
+        $parser = new MessageProcessor();
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $parser->feed(file_get_contents(__DIR__ . '/fixtures/' . $file));
+    }
+
+    /** @dataProvider badMessagesProvider */
+    public function testBadMessagesStream($file)
+    {
+        $loop = Factory::create();
+        $fh = fopen(__DIR__ . '/fixtures/' . $file, 'rn');
+        stream_set_blocking($fh, 0);
+        $fileStream = new ReadableResourceStream($fh, $loop);
+        $messageStream = new ReadableMessageStream($fileStream, new MessageProcessor());
+        $messageStream->on(
+            'error',
+            $this->expectCallableOnceWithClass(MalformedMessageException::class)
+        );
+        $loop->run();
+    }
+
+    public function badMessagesProvider()
+    {
+        return [
+            ['simple-bad-msg1.txt'],
+          ['simple-bad-msg2.txt'], 
+            ['simple-bad-msg3.txt'],
+        ];
+    }
+
+    /** @dataProvider badIncompleteMessagesProvider */
+    public function testBadMessagesIncomplete($file)
+    {
+        //$this->expectException(IncompleteMessageException::class);
+        $parser = new MessageProcessor();
+        $parser->feed(file_get_contents(__DIR__ . '/fixtures/' . $file));
+        $this->assertTrue($parser->getMessage() !== null || $parser->hasBuffer());
+        
+    }
+
+    /** @dataProvider badIncompleteMessagesProvider */
+    public function testBadMessagesIncompleteStream($file)
+    {
+        $loop = Factory::create();
+        $fh = fopen(__DIR__ . '/fixtures/' . $file, 'rn');
+        stream_set_blocking($fh, 0);
+        $fileStream = new ReadableResourceStream($fh, $loop);
+        $messageStream = new ReadableMessageStream($fileStream, new MessageProcessor());
+        $messageStream->on(
+            'error',
+            $this->expectCallableOnceWithClass(IncompleteMessageException::class)
+        );
+        $loop->run();
+    }
+
+    public function badIncompleteMessagesProvider()
+    {
+        return [
+            ['simple-bad-incomplete-msg1.txt'],
+            ['simple-bad-incomplete-msg2.txt'],
+            ['simple-bad-incomplete-msg3.txt'],
+        ];
+    }
 
     public function testHeaderDetection()
     {

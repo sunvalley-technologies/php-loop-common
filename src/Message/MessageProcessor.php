@@ -95,7 +95,7 @@ class MessageProcessor
 
         return count($this->messages);
     }
-
+    
     /**
      * Internal feed method that is recurred
      *
@@ -141,14 +141,14 @@ class MessageProcessor
             if ($eolPos === 0) {
                 $headersString = '';
             } else {
-                $headersString = substr($this->buffer, 0, $eolPos) ;
+                $headersString = substr($this->buffer, 0, $eolPos);
             }
-            
+
             $this->buffer = substr($this->buffer, $eolPos + strlen($eol) * 2);
             if ($this->buffer === false) {
                 $this->buffer = '';
             }
-            
+
             // handle extra spaces caused by buggy clients here
             $cleanedHeader = trim($headersString);
             if (empty($cleanedHeader)) {
@@ -182,7 +182,7 @@ class MessageProcessor
         $unfoldedHeaderString = $this->unfoldHeaderString($cleanedHeaderString, $eol);
         $headers = explode($eol, $unfoldedHeaderString);
         if (empty($headers)) {
-            throw new MalformedMessageException('Dropping empty/invalid message');
+            throw new MalformedMessageException($this->message, 'Dropping empty/invalid message');
         }
 
         $protocol = null;
@@ -193,26 +193,28 @@ class MessageProcessor
                 $this->validateProtocol($protocol);
             } catch (Exception $e) {
                 throw new MalformedMessageException(
+                    $this->message,
                     sprintf(
                         'Validating protocol failed because %s. Protocol line is "%s".',
                         $e->getMessage(),
                         $protocol
-                    ), $e->getCode(), $e
+                    ), $e
                 );
             }
         }
 
         if (empty($headers)) {
-            throw new MalformedMessageException('No headers found!');
+            throw new MalformedMessageException($this->message, 'No headers found!');
         }
-        
+
         $parsed = [];
         foreach ($headers as $headerLine) {
             $headerLine = trim($headerLine);
             $split = explode(':', $headerLine, 2);
             if (!isset($split[1])) {
                 throw new MalformedMessageException(
-                    sprintf("Malformed header message where current buffer is \n <<<  %s  >>>\n\n", $this->buffer)
+                    $this->message,
+                    sprintf("Malformed header where header is \n\n  %s  \n\n", $headersString)
                 );
             }
             [$name, $value] = $split;
@@ -369,5 +371,23 @@ class MessageProcessor
         return [$eol, $endOfHeaders];
     }
 
+    /**
+     * Get current processing message or last message that is getting processed
+     * 
+     * @return MessageInterface|null
+     */
+    public function getMessage(): ?MessageInterface
+    {
+        return $this->message;
+    }
 
+    /**
+     * Check if there is anything in the buffer
+     * 
+     * @return bool
+     */
+    public function hasBuffer(): bool
+    {
+        return !empty(trim($this->buffer));  
+    }
 }
