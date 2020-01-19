@@ -1,0 +1,254 @@
+Received: from x.y.test
+	by example.net
+	via TCP
+	with ESMTP
+	id ABC12345
+	for <mary@example.net>;  21 Nov 1997 10:05:43 -0600
+Received: from node.example by x.y.test; 21 Nov 1997 10:01:22 -0600
+From: John Doe <jdoe@node.example>
+To: Mary Smith <mary@example.net>
+Subject: Saying Hello
+Date: Fri, 21 Nov 1997 09:55:06 -0600
+Content-Length: 50
+Message-ID: <1234@local.node.example>
+
+This is a message just to say hello.
+So, "Hello".
+
+From: Mary Smith <mary@example.net>
+To: John Doe <jdoe@machine.example>
+Reply-To: "Mary Smith: Personal Account" <smith@home.example>
+Subject: Re: Saying Hello
+Date: Fri, 21 Nov 1997 10:01:10 -0600
+Message-ID: <3456@example.net>
+In-Reply-To: <1234@local.machine.example>
+References: <1234@local.machine.example>
+Content-Length: 30
+
+This is a reply to your hello.
+
+Event-Name: CHANNEL_DATA
+Core-UUID: bb6a4f36-b6ee-4a68-99c8-c6631b28cffc
+FreeSWITCH-Hostname: 8b5f13bb4a0f
+FreeSWITCH-Switchname: a12243
+FreeSWITCH-IPv4: 172.17.0.3
+FreeSWITCH-IPv6: %3A%3A1
+Event-Date-Local: 2020-01-17%2020%3A53%3A43
+Event-Date-GMT: Fri,%2017%20Jan%202020%2020%3A53%3A43%20GMT
+Event-Date-Timestamp: 1579294423525720
+Event-Calling-File: mod_event_socket.c
+Event-Calling-Function: parse_command
+Event-Calling-Line-Number: 2013
+Event-Sequence: 4357
+Channel-Direction: inbound
+Channel-Logical-Direction: inbound
+Channel-Username: phone12
+Channel-Dialplan: XML
+Channel-Caller-ID-Name: phone12
+Channel-Caller-ID-Number: phone12
+Channel-Orig-Caller-ID-Name: phone12
+Channel-Orig-Caller-ID-Number: phone12
+Channel-Network-Addr: 172.18.0.1
+Channel-ANI: phone12
+Channel-Destination-Number: 40045258
+Channel-Unique-ID: fc13f835-8e0e-4ff8-8c24-8440b4fc4b33
+Channel-Source: mod_sofia
+Channel-Context: internal
+Channel-Channel-Name: sofia/internal/phone12%40172.18.0.6%3A5061
+Channel-Profile-Index: 1
+Channel-Profile-Created-Time: 1579294423465725
+Channel-Channel-Created-Time: 1579294423465725
+Channel-Channel-Answered-Time: 1579294423485724
+Channel-Channel-Progress-Time: 0
+Channel-Channel-Progress-Media-Time: 1579294423485724
+Channel-Channel-Hangup-Time: 0
+Channel-Channel-Transfer-Time: 0
+Channel-Channel-Resurrect-Time: 0
+Channel-Channel-Bridged-Time: 0
+Channel-Channel-Last-Hold: 0
+Channel-Channel-Hold-Accum: 0
+Channel-Screen-Bit: true
+Channel-Privacy-Hide-Name: false
+Channel-Privacy-Hide-Number: false
+Channel-State: CS_EXECUTE
+Channel-Call-State: ACTIVE
+Channel-State-Number: 4
+Channel-Name: sofia/internal/phone12%40172.18.0.6%3A5061
+Unique-ID: fc13f835-8e0e-4ff8-8c24-8440b4fc4b33
+Call-Direction: inbound
+Presence-Call-Direction: inbound
+Channel-HIT-Dialplan: true
+Channel-Presence-ID: phone12%40172.18.0.6
+Channel-Call-UUID: fc13f835-8e0e-4ff8-8c24-8440b4fc4b33
+Answer-State: answered
+Channel-Read-Codec-Name: opus
+Channel-Read-Codec-Rate: 48000
+Channel-Read-Codec-Bit-Rate: 0
+Channel-Write-Codec-Name: opus
+Channel-Write-Codec-Rate: 48000
+Channel-Write-Codec-Bit-Rate: 0
+Caller-Direction: inbound
+Caller-Logical-Direction: inbound
+Caller-Username: phone12
+Caller-Dialplan: XML
+Caller-Caller-ID-Name: phone12
+Caller-Caller-ID-Number: phone12
+Caller-Orig-Caller-ID-Name: phone12
+Caller-Orig-Caller-ID-Number: phone12
+Caller-Network-Addr: 172.18.0.1
+Caller-ANI: phone12
+Caller-Destination-Number: 40045258
+Caller-Unique-ID: fc13f835-8e0e-4ff8-8c24-8440b4fc4b33
+Caller-Source: mod_sofia
+Caller-Context: internal
+Caller-Channel-Name: sofia/internal/phone12%40172.18.0.6%3A5061
+Caller-Profile-Index: 1
+Caller-Profile-Created-Time: 1579294423465725
+Caller-Channel-Created-Time: 1579294423465725
+Caller-Channel-Answered-Time: 1579294423485724
+Caller-Channel-Progress-Time: 0
+Caller-Channel-Progress-Media-Time: 1579294423485724
+Caller-Channel-Hangup-Time: 0
+Caller-Channel-Transfer-Time: 0
+Caller-Channel-Resurrect-Time: 0
+Caller-Channel-Bridged-Time: 0
+Caller-Channel-Last-Hold: 0
+Caller-Channel-Hold-Accum: 0
+Caller-Screen-Bit: true
+Caller-Privacy-Hide-Name: false
+Caller-Privacy-Hide-Number: false
+variable_direction: inbound
+variable_uuid: fc13f835-8e0e-4ff8-8c24-8440b4fc4b33
+variable_session_id: 17
+variable_sip_from_params: transport%3DUDP
+variable_sip_from_user: phone12
+variable_sip_from_port: 5061
+variable_sip_from_uri: phone12%40172.18.0.6%3A5061
+variable_sip_from_host: 172.18.0.6
+variable_video_media_flow: disabled
+variable_text_media_flow: disabled
+variable_channel_name: sofia/internal/phone12%40172.18.0.6%3A5061
+variable_sip_call_id: y8ZJ2puLySQBHyEtgQv4Ew..
+variable_sip_local_network_addr: 172.18.0.6
+variable_sip_network_ip: 172.18.0.1
+variable_sip_network_port: 42284
+variable_sip_invite_stamp: 1579294423445731
+variable_sip_received_ip: 172.18.0.1
+variable_sip_received_port: 42284
+variable_sip_via_protocol: udp
+variable_sip_authorized: true
+variable_Event-Name: REQUEST_PARAMS
+variable_Core-UUID: bb6a4f36-b6ee-4a68-99c8-c6631b28cffc
+variable_FreeSWITCH-Hostname: 8b5f13bb4a0f
+variable_FreeSWITCH-Switchname: a12243
+variable_FreeSWITCH-IPv4: 172.17.0.3
+variable_FreeSWITCH-IPv6: %3A%3A1
+variable_Event-Date-Local: 2020-01-17%2020%3A53%3A43
+variable_Event-Date-GMT: Fri,%2017%20Jan%202020%2020%3A53%3A43%20GMT
+variable_Event-Date-Timestamp: 1579294423445731
+variable_Event-Calling-File: sofia.c
+variable_Event-Calling-Function: sofia_handle_sip_i_invite
+variable_Event-Calling-Line-Number: 10517
+variable_Event-Sequence: 4336
+variable_sip_number_alias: phone12
+variable_sip_auth_username: phone12
+variable_sip_auth_realm: 172.18.0.6
+variable_number_alias: phone12
+variable_requested_user_name: phone12
+variable_requested_domain_name: 172.18.0.6%3A5061
+variable_user_name: phone12
+variable_domain_name: 172.18.0.6%3A5061
+variable_sip_from_user_stripped: phone12
+variable_sip_from_tag: efd1ed1c
+variable_sofia_profile_name: internal
+variable_sofia_profile_url: sip%3Amod_sofia%40172.18.0.6%3A5061
+variable_recovery_profile_name: internal
+variable_sip_full_via: SIP/2.0/UDP%20172.18.0.1%3A42284%3Bbranch%3Dz9hG4bK-524287-1---d1557ba6ef8d23c8%3Brport%3D42284
+variable_sip_full_from: %3Csip%3Aphone12%40172.18.0.6%3A5061%3Btransport%3DUDP%3E%3Btag%3Defd1ed1c
+variable_sip_full_to: %3Csip%3A40045258%40172.18.0.6%3A5061%3E
+variable_sip_allow: INVITE,%20ACK,%20CANCEL,%20BYE,%20NOTIFY,%20REFER,%20MESSAGE,%20OPTIONS,%20INFO,%20SUBSCRIBE
+variable_sip_req_params: transport%3DUDP
+variable_sip_req_user: 40045258
+variable_sip_req_port: 5061
+variable_sip_req_uri: 40045258%40172.18.0.6%3A5061
+variable_sip_req_host: 172.18.0.6
+variable_sip_to_user: 40045258
+variable_sip_to_port: 5061
+variable_sip_to_uri: 40045258%40172.18.0.6%3A5061
+variable_sip_to_host: 172.18.0.6
+variable_sip_contact_params: transport%3DUDP
+variable_sip_contact_user: phone12
+variable_sip_contact_port: 42284
+variable_sip_contact_uri: phone12%40172.18.0.1%3A42284
+variable_sip_contact_host: 172.18.0.1
+variable_sip_user_agent: Z%205.3.5%20rv2.9.26-mod
+variable_sip_via_host: 172.18.0.1
+variable_sip_via_port: 42284
+variable_sip_via_rport: 42284
+variable_max_forwards: 70
+variable_presence_id: phone12%40172.18.0.6
+variable_switch_r_sdp: v%3D0%0D%0Ao%3DZ%201579294423344%201%20IN%20IP4%20172.18.0.1%0D%0As%3DZ%0D%0Ac%3DIN%20IP4%20172.18.0.1%0D%0At%3D0%200%0D%0Am%3Daudio%208000%20RTP/AVP%20106%209%2098%20101%200%208%2018%203%0D%0Aa%3Drtpmap%3A106%20opus/48000/2%0D%0Aa%3Dfmtp%3A106%20maxplaybackrate%3D16000%3B%20sprop-maxcapturerate%3D16000%3B%20minptime%3D20%3B%20cbr%3D1%3B%20maxaveragebitrate%3D20000%3B%20useinbandfec%3D1%0D%0Aa%3Drtpmap%3A98%20telephone-event/48000%0D%0Aa%3Dfmtp%3A98%200-16%0D%0Aa%3Drtpmap%3A101%20telephone-event/8000%0D%0Aa%3Dfmtp%3A101%200-16%0D%0Aa%3Drtpmap%3A18%20G729/8000%0D%0Aa%3Dfmtp%3A18%20annexb%3Dno%0D%0A
+variable_ep_codec_string: mod_opus.opus%4048000h%4020i%402c,CORE_PCM_MODULE.PCMU%408000h%4020i%4064000b,CORE_PCM_MODULE.PCMA%408000h%4020i%4064000b
+variable_call_uuid: fc13f835-8e0e-4ff8-8c24-8440b4fc4b33
+variable_rtp_use_codec_string: OPUS,PCMU,PCMA,GSM,G722
+variable_remote_video_media_flow: inactive
+variable_remote_text_media_flow: inactive
+variable_remote_audio_media_flow: sendrecv
+variable_audio_media_flow: sendrecv
+variable_rtp_audio_recv_pt: 106
+variable_rtp_use_codec_name: opus
+variable_rtp_use_codec_fmtp: maxplaybackrate%3D16000%3B%20sprop-maxcapturerate%3D16000%3B%20minptime%3D20%3B%20cbr%3D1%3B%20maxaveragebitrate%3D20000%3B%20useinbandfec%3D1
+variable_rtp_use_codec_rate: 48000
+variable_rtp_use_codec_ptime: 20
+variable_rtp_use_codec_channels: 1
+variable_rtp_last_audio_codec_string: opus%4048000h%4020i%401c
+variable_read_codec: opus
+variable_original_read_codec: opus
+variable_read_rate: 48000
+variable_original_read_rate: 48000
+variable_write_codec: opus
+variable_write_rate: 48000
+variable_dtmf_type: rfc2833
+variable_local_media_ip: 172.18.0.6
+variable_local_media_port: 26966
+variable_advertised_media_ip: 172.18.0.6
+variable_rtp_use_timer_name: soft
+variable_rtp_use_pt: 106
+variable_rtp_use_ssrc: 3391517775
+variable_rtp_2833_send_payload: 98
+variable_rtp_2833_recv_payload: 98
+variable_remote_media_ip: 172.18.0.1
+variable_remote_media_port: 8000
+variable_rtp_local_sdp_str: v%3D0%0D%0Ao%3DTelesero.a12243%201579267457%201579267458%20IN%20IP4%20172.18.0.6%0D%0As%3DTelesero.a12243%0D%0Ac%3DIN%20IP4%20172.18.0.6%0D%0At%3D0%200%0D%0Am%3Daudio%2026966%20RTP/AVP%20106%2098%0D%0Aa%3Drtpmap%3A106%20opus/48000/2%0D%0Aa%3Dfmtp%3A106%20useinbandfec%3D1%3B%20minptime%3D20%0D%0Aa%3Drtpmap%3A98%20telephone-event/48000%0D%0Aa%3Dfmtp%3A98%200-16%0D%0Aa%3Dptime%3A20%0D%0Aa%3Dsendrecv%0D%0A
+variable_endpoint_disposition: ANSWER
+variable_current_application_data: 172.17.0.1%3A6565%20async
+variable_current_application: socket
+variable_socket_host: 172.17.0.1
+Content-Type: command/reply
+Reply-Text: %2BOK%0A
+Socket-Mode: async
+Control: single-channel
+
+Content-Type: command/reply
+Reply-Text: +OK Events Enabled';
+
+HTTP/1.1 404 Not Found
+Date: Sun, 18 Oct 2012 10:36:20 GMT
+Server: Apache/2.2.14 (Win32)
+Content-Length: 218
+Content-Type: text/html; charset=iso-8859-1
+Connection: Closed
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+
+<head>
+   <title>404 Not Found</title>
+</head>
+
+<body>
+   <h1>Not Found</h1>
+   <p>The requested URL /t.html was not found on this server.</p>
+</body>
+
+</html>

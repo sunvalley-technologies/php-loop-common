@@ -1,0 +1,2 @@
+/tests/Server/Message/fixtures/simple-msg-good-crlf.txt text eol=crlf
+/tests/Server/Message/fixtures/simple-msg-good-lflf.txt text eol=lflf
