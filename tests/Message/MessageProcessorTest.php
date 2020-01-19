@@ -1,13 +1,12 @@
 <?php
 
-namespace SunValley\LoopUtil\Common\Tests\Server\Message;
+namespace SunValley\LoopUtil\Common\Tests\Message;
 
 use PHPUnit\Framework\TestCase;
 use React\EventLoop\Factory;
 use React\Stream\ReadableResourceStream;
 use SunValley\LoopUtil\Common\Message\Exception\IncompleteMessageException;
 use SunValley\LoopUtil\Common\Message\Exception\MalformedMessageException;
-use SunValley\LoopUtil\Common\Message\Exception\MessageException;
 use SunValley\LoopUtil\Common\Message\Io\ReadableMessageStream;
 use SunValley\LoopUtil\Common\Message\Message;
 use SunValley\LoopUtil\Common\Message\MessageProcessor;
