@@ -8,6 +8,7 @@ use SunValley\LoopUtil\Common\Message\Exception\IncompleteMessageException;
 use SunValley\LoopUtil\Common\Message\Exception\MalformedMessageException;
 use SunValley\LoopUtil\Common\Message\Message;
 use SunValley\LoopUtil\Common\Message\MessageProcessor;
+use SunValley\LoopUtil\Common\Message\MessageProcessorInterface;
 
 /**
  * Class MessageStream handles messages coming from an incoming stream.
@@ -16,15 +17,15 @@ use SunValley\LoopUtil\Common\Message\MessageProcessor;
 class ReadableMessageStream extends AbstractReadableStreamHandlingStream
 {
 
-    /** @var MessageProcessor */
+    /** @var MessageProcessorInterface */
     protected $processor;
 
     /**
      * MessageStream constructor.
      * @param ReadableStreamInterface $input Input stream to read from
-     * @param MessageProcessor $processor Message processor that will process coming data from the input stream
+     * @param MessageProcessorInterface $processor Message processor that will process coming data from the input stream
      */
-    public function __construct(ReadableStreamInterface $input, MessageProcessor $processor)
+    public function __construct(ReadableStreamInterface $input, MessageProcessorInterface $processor)
     {
         parent::__construct($input);
         $this->processor = $processor;
