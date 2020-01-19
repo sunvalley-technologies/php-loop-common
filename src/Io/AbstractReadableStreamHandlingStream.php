@@ -102,7 +102,8 @@ abstract class AbstractReadableStreamHandlingStream extends EventEmitter impleme
     protected function handleEnd(): void
     {
         if (!$this->closed) {
-            $this->handleError(new \Exception('Unexpected end event'));
+            $this->emit('end');
+            $this->close();
         }
     }
 
