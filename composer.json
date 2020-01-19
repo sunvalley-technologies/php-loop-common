@@ -1,6 +1,6 @@
 {
   "name": "sunvalley-technologies/php-loop-common",
-  "description": "Common event loop utilities",
+  "description": "Common event loop/async utilities",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
