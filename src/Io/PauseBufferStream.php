@@ -24,26 +24,13 @@ use React\Stream\WritableStreamInterface;
  *
  * @see ReadableStreamInterface
  */
-class PauseBufferStream extends EventEmitter implements ReadableStreamInterface
+class PauseBufferStream extends AbstractReadableStreamHandlingStream
 {
-    private $input;
-    private $closed = false;
-    private $paused = false;
     private $dataPaused = '';
     private $endPaused = false;
     private $closePaused = false;
     private $errorPaused;
     private $implicit = false;
-
-    public function __construct(ReadableStreamInterface $input)
-    {
-        $this->input = $input;
-
-        $this->input->on('data', array($this, 'handleData'));
-        $this->input->on('end', array($this, 'handleEnd'));
-        $this->input->on('error', array($this, 'handleError'));
-        $this->input->on('close', array($this, 'handleClose'));
-    }
 
     /**
      * pause and remember this was not explicitly from user control
@@ -79,8 +66,7 @@ class PauseBufferStream extends EventEmitter implements ReadableStreamInterface
             return;
         }
 
-        $this->input->pause();
-        $this->paused = true;
+        parent::pause();
         $this->implicit = false;
     }
 
@@ -100,28 +86,27 @@ class PauseBufferStream extends EventEmitter implements ReadableStreamInterface
 
         if ($this->errorPaused) {
             $this->emit('error', array($this->errorPaused));
-            return $this->close();
+            $this->close();
+            
+            return ;
         }
 
         if ($this->endPaused) {
             $this->endPaused = false;
             $this->emit('end');
-            return $this->close();
+            $this->close();
+                
+            return ;
         }
 
         if ($this->closePaused) {
             $this->closePaused = false;
-            return $this->close();
+            $this->close();
+            
+            return ;
         }
 
         $this->input->resume();
-    }
-
-    public function pipe(WritableStreamInterface $dest, array $options = array())
-    {
-        Util::pipe($this, $dest, $options);
-
-        return $dest;
     }
 
     public function close()
@@ -129,20 +114,15 @@ class PauseBufferStream extends EventEmitter implements ReadableStreamInterface
         if ($this->closed) {
             return;
         }
-
-        $this->closed = true;
+        
         $this->dataPaused = '';
         $this->endPaused = $this->closePaused = false;
         $this->errorPaused = null;
 
-        $this->input->close();
-
-        $this->emit('close');
-        $this->removeAllListeners();
+        parent::close();
     }
-
-    /** @internal */
-    public function handleData($data)
+    
+    protected function handleData($data): void
     {
         if ($this->paused) {
             $this->dataPaused .= $data;
@@ -151,21 +131,18 @@ class PauseBufferStream extends EventEmitter implements ReadableStreamInterface
 
         $this->emit('data', array($data));
     }
-
-    /** @internal */
-    public function handleError(\Exception $e)
+    
+    protected function handleError(\Throwable $e): void
     {
         if ($this->paused) {
             $this->errorPaused = $e;
             return;
         }
 
-        $this->emit('error', array($e));
-        $this->close();
+        parent::handleError($e);
     }
-
-    /** @internal */
-    public function handleEnd()
+    
+    protected function handleEnd(): void
     {
         if ($this->paused) {
             $this->endPaused = true;
@@ -177,15 +154,14 @@ class PauseBufferStream extends EventEmitter implements ReadableStreamInterface
             $this->close();
         }
     }
-
-    /** @internal */
-    public function handleClose()
+    
+    protected function handleClose(): void
     {
         if ($this->paused) {
             $this->closePaused = true;
             return;
         }
 
-        $this->close();
+        parent::handleClose();
     }
 }
