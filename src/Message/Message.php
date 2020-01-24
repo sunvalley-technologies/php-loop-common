@@ -54,15 +54,42 @@ class Message implements MessageInterface
     }
 
     /** @inheritDoc */
-    public function setBody(?string $body): void
+    public function setBody(?string $body): MessageInterface
     {
         $this->body = $body;
+        
+        return $this;
     }
 
     /** @inheritDoc */
     public function getBody(): ?string
     {
         return $this->body;
+    }
+
+    /**  @inheritDoc */
+    public function setHeader(string $name, ?string $value): MessageInterface
+    {
+        $ciName = strtolower($name);
+        if ($value === null) {
+            if ($this->hasHeader($name)) {
+                unset($this->headers[$name]);
+                unset($this->ciHeaders[$ciName]);
+            }
+        } else {
+            $this->headers[$name] = $value;
+            $this->ciHeaders[$ciName] = $value;
+        }
+
+        return $this;
+    }
+
+    /**  @inheritDoc */
+    public function setProtocol(?string $protocol): MessageInterface
+    {
+        $this->protocol = $protocol;
+
+        return $this;
     }
 
     /**
@@ -144,4 +171,5 @@ class Message implements MessageInterface
     {
         return $body;
     }
+
 }
