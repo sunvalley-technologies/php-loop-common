@@ -28,6 +28,7 @@ trait ConnectionHandlerTrait
     public function open(ConnectionInterface $connection): void
     {
         $this->connection = $connection;
+        $this->handle();
     }
 
     /**
@@ -60,8 +61,9 @@ trait ConnectionHandlerTrait
 
     public function pause($data = null): PromiseInterface
     {
+        $closingPromise = first($this->connection, 'close');
         $this->connection->end($data);
-        return first($this->connection, 'close');
+        return $closingPromise;
     }
 
     public function close(): void

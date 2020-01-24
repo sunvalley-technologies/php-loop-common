@@ -74,15 +74,26 @@ class GenericServer extends EventEmitter implements GenericServerInterface
         $this->logger->debug(
             sprintf('New connection from %s to %s', $connection->getRemoteAddress(), $connection->getLocalAddress())
         );
-        $handler = clone $this->handlerTemplate;
+        $handler = $this->createHandler();
         try {
-            $connection->on('close', [$this->handlers, 'detach']);
+            $connection->on(
+                'close',
+                function () use ($handler) {
+                    $this->handlers->detach($handler);
+                }
+            );
             $handler->open($connection);
             $this->handlers->attach($handler);
         } catch (\Throwable $e) {
+            $this->handlers->detach($handler);
             $connection->close();
             $this->logger->error($e);
         }
+    }
+
+    protected function createHandler(): ConnectionHandlerInterface
+    {
+        return clone $this->handlerTemplate;
     }
 
     protected function handleError(\Throwable $error): void
@@ -111,12 +122,7 @@ class GenericServer extends EventEmitter implements GenericServerInterface
     }
 
     /** @inheritDoc */
-    public function pause()
-    {
-        $this->_pause();
-    }
-
-    protected function _pause(): PromiseInterface
+    public function pause(): PromiseInterface
     {
         $this->logger->notice(sprintf('Server is pausing now...'));
 
@@ -133,22 +139,24 @@ class GenericServer extends EventEmitter implements GenericServerInterface
     }
 
     /** @inheritDoc */
-    public function resume()
+    public function resume(): PromiseInterface
     {
         $this->logger->notice(sprintf('Server is resuming now...'));
-
+        $promises = [];
         foreach ($this->handlers as $handler) {
-            $handler->resume();
+            $promises[] = $handler->resume();
         }
 
         foreach ($this->sockets as $socket) {
             $socket->resume();
         }
+
+        return all($promises);
     }
 
     /** @inheritDoc */
     public function closeGracefully(): PromiseInterface
     {
-        return $this->_pause()->then([$this, 'close']);
+        return $this->pause()->then([$this, 'close']);
     }
 }
