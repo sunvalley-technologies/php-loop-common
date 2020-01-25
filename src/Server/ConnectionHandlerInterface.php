@@ -24,21 +24,21 @@ interface ConnectionHandlerInterface
     public function open(ConnectionInterface $connection): void;
 
     /**
-     * Called when server is paused
+     * Called when server or connection is paused.
      *
      * @return PromiseInterface<void,\Throwable> Should return a promise that resolves when all connections are closed gracefully. Should reject with an error.
      */
     public function pause(): PromiseInterface;
 
     /**
-     * Called when server is resumed
+     * Called when server or connection is resumed
      *
      * @return PromiseInterface<void,\Throwable> Should return a promise that resolves when manager is resumed
      */
     public function resume(): PromiseInterface;
 
     /**
-     * Called when server is closing. This is a termination call that indicates that the socket(s) will be closing forcefully.
+     * Called when server or connection is closing. This is a termination call that indicates that the socket(s) will be closing forcefully.
      * 
      */
     public function close(): void;
